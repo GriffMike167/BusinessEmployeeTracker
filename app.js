@@ -1,5 +1,8 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
+const { viewAllDepartments } = require("./lib/viewAllDepartments");
+const { viewAllEmployees } = require("./lib/viewAllEmployees");
+const { viewAllRoles } = require("./lib/viewAllRoles");
 
 
 const connection = mysql.createConnection({
@@ -9,6 +12,7 @@ const connection = mysql.createConnection({
     password:"rootroot",
     database: "employee_databaseDB"
 });
+exports.connection = connection;
 
 connection.connect(function(err) {
     if (err) throw err
@@ -42,7 +46,7 @@ function startPrompt() {
                     break;
 
                     case "View All Employess by Roles?":
-                    console.log("View All Employess by Roles?")
+                    viewAllRoles();
                     break;
 
                     case "Update an Employee?":
@@ -62,25 +66,5 @@ function startPrompt() {
                     break;
                 }
             })
-        };
-function viewAllEmployees(){
-    connection.query("SELECT * FROM employee"), function (err, res) {
-        if (err) throw err 
-        console.table(res)
-        startPrompt()
-    }
-};
-function viewAllDepartments(){
-    connection.query("SELECT department_name, first_name, last_name From employee"), function (err, res) {
-        if (err) throw err 
-        console.table(res)
-        startPrompt()
-    }
-};
-function viewAllEmployees(){
-    connection.query("SELECT * FROM employee"), function (err, res) {
-        if (err) throw err 
-        console.table(res)
-        startPrompt()
-    }
-};
+        }exports.startPrompt = startPrompt;
+
