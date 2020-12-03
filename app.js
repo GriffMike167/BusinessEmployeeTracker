@@ -34,11 +34,11 @@ function startPrompt() {
             ]).then(function(val) {
                 switch (val.choice){
                     case "View All Employees?":
-                    console.log("View All Employees?")
+                    viewAllEmployees();
                     break;
 
                     case "View All Employees By Departments?":
-                    console.log("View All Employees By Departments?")
+                    viewAllDepartments();
                     break;
 
                     case "View All Employess by Roles?":
@@ -62,5 +62,25 @@ function startPrompt() {
                     break;
                 }
             })
-        }
-
+        };
+function viewAllEmployees(){
+    connection.query("SELECT * FROM employee"), function (err, res) {
+        if (err) throw err 
+        console.table(res)
+        startPrompt()
+    }
+};
+function viewAllDepartments(){
+    connection.query("SELECT department_name, first_name, last_name From employee"), function (err, res) {
+        if (err) throw err 
+        console.table(res)
+        startPrompt()
+    }
+};
+function viewAllEmployees(){
+    connection.query("SELECT * FROM employee"), function (err, res) {
+        if (err) throw err 
+        console.table(res)
+        startPrompt()
+    }
+};

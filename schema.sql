@@ -20,12 +20,12 @@ CREATE TABLE role (
 );
 
 CREATE TABLE employee (
-    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
 	department_name VARCHAR(30),
     role_id INT,
     manager_id INT,
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
     -- FOREIGN KEY (department_name) REFERENCES department(name),
     FOREIGN KEY (role_id) REFERENCES role(id),
