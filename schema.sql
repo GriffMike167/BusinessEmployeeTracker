@@ -23,8 +23,11 @@ CREATE TABLE employee (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
+	department_name VARCHAR(30),
     role_id INT,
     manager_id INT,
+
+    -- FOREIGN KEY (department_name) REFERENCES department(name),
     FOREIGN KEY (role_id) REFERENCES role(id),
     FOREIGN KEY (manager_id) REFERENCES employee(id)
 
@@ -60,69 +63,69 @@ INSERT INTO role (title, salary, department_id)
 VALUE ("Software Engineer", 100000, 3);
 
 
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Sales Manager
-VALUE ("Michael", "Griffith", null, 1);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Michael", "Griffith", "Sales Manager", 1, null);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Legal Dept Manager
-VALUE ("Daniel", "Johns", null, 2);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Daniel", "Johns", "Legal Dept Manage", 2, null);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Engeneering Manager
-VALUE ("Debrah", "LeMaster", null, 3);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Debrah", "LeMaster", "Engeneering Manager", 3, null);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Sales Lead
-VALUE ("Jeffrey", "Clay", 1, 4);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Jeffrey", "Clay", "Sales Lead", 4, 1);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Sales Lead
-VALUE ("Bo", "Jackson", 1, 4);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Bo", "Jackson", "Sales Lead", 4, 1);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Salesperson
-VALUE ("Don", "Beebe", 4, 5);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Don", "Beebe", "Salesperson", 5, 1);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Salesperson
-VALUE ("George", "Brett", 4, 5);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("George", "Brett", "Salesperson", 5, 1);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- -- Salesperson
-VALUE ("Lisa", "Leslie", 4, 5);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Lisa", "Leslie", "Salesperson",  5, 1);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Salesperson
-VALUE ("Kevin", "Hart", 4, 5);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Kevin", "Hart", "Salesperson", 5, 1);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Lawyer
-VALUE ("Beth", "Harmon", 2, 6);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Beth", "Harmon", "Lawyer", 6, 2);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Lawyer
-VALUE ("Araminta", "Ross", 2, 6);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Araminta", "Ross", "Lawyer", 6, 2);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Paralegal
-VALUE ("Eric", "Davis", 6, 7);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Eric", "Davis", "Paralegal", 7, 2);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Paralegal
-VALUE ("Tom", "Monahand", 6, 7);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Tom", "Monahand", "Paralegal", 7, 2);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Paralegal
-VALUE ("Chipper", "Jones", 6, 7);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Chipper", "Jones", "Paralegal", 7, 2);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Software Engineer
-VALUE ("Joe", "Jackson", 3, 8);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Joe", "Jackson", "Software Engineer", 8, 3);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Software Engineer
-VALUE ("Mike", "Lowrey", 3, 8);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Mike", "Lowrey", "Software Engineer", 8, 3);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Software Engineer
-VALUE ("Wes", "Welker", 3, 8);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Wes", "Welker", "Software Engineer",  8, 3);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Software Engineer
-VALUE ("Jerry", "West", 3, 8);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Jerry", "West", "Software Engineer", 8, 3);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Intern
-VALUE ("Pete", "Rose", 8, 9);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Pete", "Rose", "Intern", 9, 3);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Intern
-VALUE ("Frances", "Bean", 8, 9);
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
+VALUE ("Frances", "Bean", "Intern", 9, 3);
+INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
 -- Intern
-VALUE ("Charlie", "Bucket", 8, 9);
+VALUE ("Charlie", "Bucket", "Intern", 9, 3);
 
 SELECT * FROM department;
 SELECT * FROM role;
