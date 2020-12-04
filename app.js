@@ -60,7 +60,8 @@ function startPrompt() {
                     break;
 
                     case "Update an Employee?":
-                    console.log("Update an Employee?")
+                    updateEmployee();
+                    // console.log("Update an Employee?")
                     break;
 
                     case "Add an Employee?":
@@ -101,14 +102,7 @@ function startPrompt() {
                 startPrompt();
             });
         }
-        // function viewDepartment() {
-        //     connection.query("SELECT department_name, first_name, last_name From employee", function (err, res) {
-        //         if (err)
-        //             throw err;
-        //         console.table(res);
-        //         startPrompt();
-        //     });
-        // }
+     
         function addEmployee(){
             inquirer.prompt ([
                 {
@@ -123,20 +117,19 @@ function startPrompt() {
                 },
                 {
                     name: "choice",
-                    type: "rawlist",
+                    type: "list",
                     message: "Enter their role: ",
                     choices: chooseRole()
                 },
                 {
                     name: "manager",
-                    type: "rawlist",
+                    type: "list",
                     message: "Enter their Manager: ",
                     choices: chooseManager()
                 }
             ])
             .then(function (val) {
                 var roleId = chooseRole().indexOf(val.choice) - 1
-                // console.log(chooseRole().answer)
                 var managerId = chooseManager().indexOf(val.manager) + 1
                 connection.query("INSERT INTO employee SET ?", 
                 {
@@ -145,11 +138,8 @@ function startPrompt() {
                     department_name: val.choice,
                     role_id: roleId,
                     manager_id: managerId,
-
-                    // manager_id: managerId,
-                    
-                    
-                }, function(err){
+                }, 
+                    function(err){
                     if (err) throw err
                     console.table(val)
                     startPrompt()
@@ -157,8 +147,6 @@ function startPrompt() {
           
             })
         }
-          
-
     var roleChoice = [];
     function chooseRole(){
         connection.query("SELECT * From department", function(err, res) {
@@ -168,7 +156,6 @@ function startPrompt() {
             }
         })
         return roleChoice;
-        // chooseManager()
         
     };
     var managerChoice = [];
@@ -182,62 +169,62 @@ function startPrompt() {
         return managerChoice;
         
     };
-    // var departmentChoice = [];
-    // function (){
-    //     connection.query("SELECT first_name, last_name FROM employee where manager_id IS NULL", function(err, res) {
-    //         if (err) throw err
-    //         for (var i = 0; i < res.length; i++) {
-    //             managerChoice.push(res[i].first_name);
-    //         }
-    //     })
-    //     return managerChoice;
-        
-    // };
-        
-                // ].then(function(val) {
-                //     switch (val.choice){
-                //         case "Sales Manager":
-                //             console.log("4")
-                        
-                            // inquirer.prompt([
-                            //     {
-                            //         name: "manager",
-                            //         type: "list",
-                            //         message: "Whats their manager name: ",
-                            //         choice: [
-                            //             "Michael Griffith",
-                            //             "Daniel Johns",
-                            //             "Debrah LeMaster"
-                            //         ],
-                            //     }
-                            // ])
-                    //     }
-                    // }),
-                    // )};
-
-                                
-                // {
-                //     name: "manager",
-                //     type: "list",
-                //     message: "Whats their manager name: ",
-                //     choice: [
-                //         "Michael Griffith",
-                //         "Daniel Johns",
-                //         "Debrah LeMaster"
-                //     ]
+    
+    function updateEmployee(){
+        inquirer.prompt ([
+            {
+                name: "salary",
+                type: "input",
+                message: "Enter updated salary: ",
+            },
+            {
+                name: "choice",
+                type: "list",
+                message: "Enter their role: ",
+                choices: chooseEmployee()
+            },
+            {
+                name: "phonenumber",
+                type: "input",
+                message: "Enter their phone number: ",
                 
+            },
+            
+        ]).then(function (val) {
+            connection.query("INSERT INTO role SET ?", 
+            {
+                salary: val.salary,
+                // phonenumber: val.phonenumber
+            },
+                 function(err){
+                    if (err) throw err
+                    console.table(val)
+                    startPrompt()
+            });
+        });
+    };
+    
 
-
-            // ]).then(function (val) {
-            //     connection.query("INSERT INTO employee SET ?",
-            //      {
-            //          first_name: val.firstname,
-            //          last_name: val.lastname,
-            //          department_name: val.choice,
-            //         //  manager_id: val.role_id
-                     
-            //      }
-            //     )
-            // })
+    var employeeChoice = [];
+    function chooseEmployee(){
+        connection.query("SELECT first_name, last_name FROM employee", function(err, res) {
+            if (err) throw err
+            for (var i = 0; i < res.length; i++) {
+                employeeChoice.push(res[i].first_name + res[i].last_name);
+            }
+        })
+        return employeeChoice;
         
-        
+    };
+    var salaryEmployee = [];
+    function chooseSalary() {
+        connection.query("SELECT role.department_name, role.salary, employee.first_name, employee.last_name from ROLE inner JOIN employee on employee.department_name = role.department_name", function(err, res) {
+            if (err) throw err
+            for (var i = 0; i < res.length; i++) {
+                salaryEmployee.push(res[i].salary);
+                
+            }
+                
+        })
+            return salaryEmployee;
+    };
