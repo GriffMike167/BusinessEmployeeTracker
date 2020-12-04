@@ -134,14 +134,35 @@ function startPrompt() {
                     choices: chooseManager()
                 }
             ])
-            };
+            .then(function (val) {
+                var roleId = chooseRole().answer
+                console.log(chooseRole().answer)
+                // var managerId = chooseManager().indexOf(val.choice) + 1
+                connection.query("INSERT INTO employee SET ?", 
+                {
+                    first_name: val.firstname,
+                    last_name: val.lastname,
+                    department_name: val.choice,
+
+                    // manager_id: managerId,
+                    // role_id: roleId
+                    
+                }, function(err){
+                    if (err) throw err
+                    console.table(val)
+                    startPrompt()
+                })
+          
+            })
+        }
+          
 
     var roleChoice = [];
     function chooseRole(){
-        connection.query("SELECT * From role group by id", function(err, res) {
+        connection.query("SELECT * From department", function(err, res) {
             if (err) throw err
             for (var i = 0; i < res.length; i++) {
-                roleChoice.push(res[i].title);
+                roleChoice.push(res[i].name);
             }
         })
         return roleChoice;

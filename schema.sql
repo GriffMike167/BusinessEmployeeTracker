@@ -27,6 +27,7 @@ CREATE TABLE employee (
     manager_id INT,
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 
+
     -- FOREIGN KEY (department_name) REFERENCES department(name),
     FOREIGN KEY (role_id) REFERENCES role(id),
     FOREIGN KEY (manager_id) REFERENCES employee(id)
@@ -46,13 +47,11 @@ VALUE ("Engineering");
 INSERT INTO role (title, salary, department_id)
 VALUE ("Sales Manager", 125000, 1);
 INSERT INTO role (title, salary, department_id)
-VALUE ("Sales Lead", 225000, 1);
-INSERT INTO role (title, salary, department_id)
 VALUE ("Legal Dept. Manager", 325000, 2);
 INSERT INTO role (title, salary, department_id)
 VALUE ("Engineering Manager", 175000, 3);
 INSERT INTO role (title, salary, department_id)
-VALUE ("Intern", 55000, 3);
+VALUE ("Sales Lead", 225000, 1);
 INSERT INTO role (title, salary, department_id)
 VALUE ("Salesperson", 70000, 1);
 INSERT INTO role (title, salary, department_id)
@@ -61,6 +60,9 @@ INSERT INTO role (title, salary, department_id)
 VALUE ("Paralegal", 55000, 2);
 INSERT INTO role (title, salary, department_id)
 VALUE ("Software Engineer", 100000, 3);
+INSERT INTO role (title, salary, department_id)
+VALUE ("Intern", 55000, 3);
+
 
 
 INSERT INTO employee (first_name, last_name, department_name, role_id, manager_id)
