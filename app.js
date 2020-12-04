@@ -216,15 +216,4 @@ function startPrompt() {
         return employeeChoice;
         
     };
-    var salaryEmployee = [];
-    function chooseSalary() {
-        connection.query("SELECT role.department_name, role.salary, employee.first_name, employee.last_name from ROLE inner JOIN employee on employee.department_name = role.department_name", function(err, res) {
-            if (err) throw err
-            for (var i = 0; i < res.length; i++) {
-                salaryEmployee.push(res[i].salary);
-                
-            }
-                
-        })
-            return salaryEmployee;
-    };
+    
