@@ -64,7 +64,7 @@ function startPrompt() {
                     break;
 
                     case "Add an Employee?":
-                        addEmployee();
+                    addEmployee();
                     break;
 
                     case "Add a Department?":
@@ -123,42 +123,98 @@ function startPrompt() {
                 },
                 {
                     name: "choice",
-                    type: "list",
+                    type: "rawlist",
                     message: "Enter their role: ",
-                    choices: [ 
-                        "Sales Manager",
-                        "Legal Department",
-                        "Engeneering Manger",
-                        "Sales Lead",
-                        "Salesperson",
-                        "Lawyer",
-                        "Paralegal",
-                        "Software Engineer",
-                        "Intern"
-                    ]
+                    choices: chooseRole()
                 },
                 {
                     name: "manager",
-                    type: "list",
-                    message: "Whats their manager name: ",
-                    choice: [
-                        "Michael Griffith",
-                        "Daniel Johns",
-                        "Debrah LeMaster"
-                    ]
+                    type: "rawlist",
+                    message: "Enter their Manager: ",
+                    choices: chooseManager()
                 }
+            ])
+            };
+
+    var roleChoice = [];
+    function chooseRole(){
+        connection.query("SELECT * From role group by id", function(err, res) {
+            if (err) throw err
+            for (var i = 0; i < res.length; i++) {
+                roleChoice.push(res[i].title);
+            }
+        })
+        return roleChoice;
+        // chooseManager()
+        
+    };
+    var managerChoice = [];
+    function chooseManager(){
+        connection.query("SELECT first_name, last_name FROM employee where manager_id IS NULL", function(err, res) {
+            if (err) throw err
+            for (var i = 0; i < res.length; i++) {
+                managerChoice.push(res[i].first_name  +  res[i].last_name);
+            }
+        })
+        return managerChoice;
+        
+    };
+    // var departmentChoice = [];
+    // function (){
+    //     connection.query("SELECT first_name, last_name FROM employee where manager_id IS NULL", function(err, res) {
+    //         if (err) throw err
+    //         for (var i = 0; i < res.length; i++) {
+    //             managerChoice.push(res[i].first_name);
+    //         }
+    //     })
+    //     return managerChoice;
+        
+    // };
+        
+                // ].then(function(val) {
+                //     switch (val.choice){
+                //         case "Sales Manager":
+                //             console.log("4")
+                        
+                            // inquirer.prompt([
+                            //     {
+                            //         name: "manager",
+                            //         type: "list",
+                            //         message: "Whats their manager name: ",
+                            //         choice: [
+                            //             "Michael Griffith",
+                            //             "Daniel Johns",
+                            //             "Debrah LeMaster"
+                            //         ],
+                            //     }
+                            // ])
+                    //     }
+                    // }),
+                    // )};
+
+                                
+                // {
+                //     name: "manager",
+                //     type: "list",
+                //     message: "Whats their manager name: ",
+                //     choice: [
+                //         "Michael Griffith",
+                //         "Daniel Johns",
+                //         "Debrah LeMaster"
+                //     ]
+                
 
 
-            ]).then(function (val) {
-                connection.query("INSERT INTO employee SET ?",
-                 {
-                     first_name: val.firstname,
-                     last_name: val.lastname,
-                     department_name: val.choice,
-                    //  manager_id: val.role_id
+            // ]).then(function (val) {
+            //     connection.query("INSERT INTO employee SET ?",
+            //      {
+            //          first_name: val.firstname,
+            //          last_name: val.lastname,
+            //          department_name: val.choice,
+            //         //  manager_id: val.role_id
                      
-                 }
-                )
-            })
-        };
+            //      }
+            //     )
+            // })
+        
         
