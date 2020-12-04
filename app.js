@@ -135,17 +135,19 @@ function startPrompt() {
                 }
             ])
             .then(function (val) {
-                var roleId = chooseRole().answer
-                console.log(chooseRole().answer)
-                // var managerId = chooseManager().indexOf(val.choice) + 1
+                var roleId = chooseRole().indexOf(val.choice) - 1
+                // console.log(chooseRole().answer)
+                var managerId = chooseManager().indexOf(val.manager) + 1
                 connection.query("INSERT INTO employee SET ?", 
                 {
                     first_name: val.firstname,
                     last_name: val.lastname,
                     department_name: val.choice,
+                    role_id: roleId,
+                    manager_id: managerId,
 
                     // manager_id: managerId,
-                    // role_id: roleId
+                    
                     
                 }, function(err){
                     if (err) throw err
@@ -171,10 +173,10 @@ function startPrompt() {
     };
     var managerChoice = [];
     function chooseManager(){
-        connection.query("SELECT first_name, last_name FROM employee where manager_id IS NULL", function(err, res) {
+        connection.query("SELECT role_id, first_name, last_name FROM employee where manager_id IS NULL", function(err, res) {
             if (err) throw err
             for (var i = 0; i < res.length; i++) {
-                managerChoice.push(res[i].first_name  +  res[i].last_name);
+                managerChoice.push(res[i].first_name + res[i].last_name);
             }
         })
         return managerChoice;
