@@ -1,8 +1,9 @@
-const inquirer = require("inquirer");
 const mysql = require("mysql");
-const { viewAllDepartments } = require("./lib/viewAllDepartments");
-const { viewAllEmployees } = require("./lib/viewAllEmployees");
-const { viewAllRoles } = require("./lib/viewAllRoles");
+const inquirer = require("inquirer");
+
+// const { viewAllDepartments } = require("./lib/viewAllDepartments");
+// const { viewAllEmployees } = require("./lib/viewAllEmployees");
+// const { viewAllRoles } = require("./lib/viewAllRoles");
 
 
 const connection = mysql.createConnection({
@@ -16,7 +17,8 @@ exports.connection = connection;
 
 connection.connect(function(err) {
     if (err) throw err
-    console.log("Connected as" + connection.threadID)
+    // console.log("Connected as " + connection.threadID)
+    startPrompt();
 });
 
 function startPrompt() {
@@ -38,14 +40,22 @@ function startPrompt() {
             ]).then(function(val) {
                 switch (val.choice){
                     case "View All Employees?":
+                        // console.log("View All Employees");
+                        // startPrompt();
                     viewAllEmployees();
                     break;
 
                     case "View All Employees By Departments?":
+                        // console.log("View All Departments")
                     viewAllDepartments();
                     break;
 
                     case "View All Employess by Roles?":
+                        // console.log("View All Roles")
+                    viewAllRoles();
+                    break;
+                    case "View All Employess by Department?":
+                        // console.log("View All Roles")
                     viewAllRoles();
                     break;
 
@@ -54,7 +64,7 @@ function startPrompt() {
                     break;
 
                     case "Add an Employee?":
-                    console.log("Add an Employee?")
+                        addEmployee();
                     break;
 
                     case "Add a Department?":
@@ -65,6 +75,90 @@ function startPrompt() {
                     console.log("Ass a Role?")
                     break;
                 }
-            })
-        }exports.startPrompt = startPrompt;
+            })};
+        exports.startPrompt = startPrompt;
+        function viewAllDepartments() {
+            connection.query("SELECT department_name, first_name, last_name From employee", function (err, res) {
+                if (err)
+                    throw err;
+                console.table(res);
+                startPrompt();
+            });
+        }
+        function viewAllEmployees() {
+            connection.query("SELECT * FROM employee", function (err, res) {
+                if (err)
+                    throw err;
+                console.table(res);
+                startPrompt();
+            });
+        }
+        function viewAllRoles() {
+            connection.query("SELECT role_id, department_name, first_name, last_name From employee", function (err, res) {
+                if (err)
+                    throw err;
+                console.table(res);
+                startPrompt();
+            });
+        }
+        // function viewDepartment() {
+        //     connection.query("SELECT department_name, first_name, last_name From employee", function (err, res) {
+        //         if (err)
+        //             throw err;
+        //         console.table(res);
+        //         startPrompt();
+        //     });
+        // }
+        function addEmployee(){
+            inquirer.prompt ([
+                {
+                    name: "firstname",
+                    type: "input",
+                    message: "Enter first name of employee: "
+                },
+                {
+                    name: "lastname",
+                    type: "input",
+                    message: "Enter last name of employee: ",
+                },
+                {
+                    name: "choice",
+                    type: "list",
+                    message: "Enter their role: ",
+                    choices: [ 
+                        "Sales Manager",
+                        "Legal Department",
+                        "Engeneering Manger",
+                        "Sales Lead",
+                        "Salesperson",
+                        "Lawyer",
+                        "Paralegal",
+                        "Software Engineer",
+                        "Intern"
+                    ]
+                },
+                {
+                    name: "manager",
+                    type: "list",
+                    message: "Whats their manager name: ",
+                    choice: [
+                        "Michael Griffith",
+                        "Daniel Johns",
+                        "Debrah LeMaster"
+                    ]
+                }
 
+
+            ]).then(function (val) {
+                connection.query("INSERT INTO employee SET ?",
+                 {
+                     first_name: val.firstname,
+                     last_name: val.lastname,
+                     department_name: val.choice,
+                    //  manager_id: val.role_id
+                     
+                 }
+                )
+            })
+        };
+        
