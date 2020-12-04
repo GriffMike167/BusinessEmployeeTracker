@@ -31,8 +31,8 @@ function startPrompt() {
                 "View All Employees?",
                 "View All Employees By Departments?",
                 "View All Employess by Roles?",
-                "Update an Employee?",
                 "Add an Employee?",
+                "Update an Employee?",
                 "Add a Department?",
                 "Ass a Role?"
             ]}
@@ -66,8 +66,6 @@ function startPrompt() {
                     updateEmployee();
                     // console.log("Update an Employee?")
                     break;
-
-                    
 
                     case "Add a Department?":
                     console.log("Add a Department?")
