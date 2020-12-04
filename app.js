@@ -58,15 +58,16 @@ function startPrompt() {
                         // console.log("View All Roles")
                     viewAllRoles();
                     break;
+                    case "Add an Employee?":
+                    addEmployee();
+                    break;
 
                     case "Update an Employee?":
                     updateEmployee();
                     // console.log("Update an Employee?")
                     break;
 
-                    case "Add an Employee?":
-                    addEmployee();
-                    break;
+                    
 
                     case "Add a Department?":
                     console.log("Add a Department?")
@@ -129,7 +130,7 @@ function startPrompt() {
                 }
             ])
             .then(function (val) {
-                var roleId = chooseRole().indexOf(val.choice) - 1
+                var roleId = chooseRole().indexOf(val.choice) + 1
                 var managerId = chooseManager().indexOf(val.manager) + 1
                 connection.query("INSERT INTO employee SET ?", 
                 {
@@ -173,15 +174,21 @@ function startPrompt() {
     function updateEmployee(){
         inquirer.prompt ([
             {
-                name: "salary",
-                type: "input",
-                message: "Enter updated salary: ",
+                name: "summary",
+                type: "confirm",
+                message: "You want update Employyes ",
+                
             },
             {
                 name: "choice",
                 type: "list",
-                message: "Enter their role: ",
+                message: "Choose employee: ",
                 choices: chooseEmployee()
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "Enter updated salary: ",
             },
             {
                 name: "phonenumber",
