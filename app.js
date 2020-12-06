@@ -200,7 +200,7 @@ function startPrompt() {
             },
             
         ]).then(function (val) {
-            connection.query("INSERT INTO role SET ?"
+            connection.query("INSERT INTO role SET ?",
             {
                 salary: val.salary,
             
