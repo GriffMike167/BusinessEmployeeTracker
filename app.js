@@ -34,7 +34,7 @@ function startPrompt() {
                 "Add an Employee?",
                 "Update an Employee?",
                 "Add a Department?",
-                "Add a Role?"
+                "Ass a Role?"
             ]}
 
             ]).then(function(val) {
@@ -68,11 +68,10 @@ function startPrompt() {
                     break;
 
                     case "Add a Department?":
-                    addDepartment();
                     console.log("Add a Department?")
                     break;
 
-                    case "Add a Role?":
+                    case "Ass a Role?":
                     addRole();
                     console.log("Ass a Role?")
                     break;
@@ -130,14 +129,12 @@ function startPrompt() {
                 }
             ])
             .then(function (val) {
-                var roleId = chooseRole().indexOf(val.choice) + 1
                 var managerId = chooseManager().indexOf(val.manager) + 1
                 connection.query("INSERT INTO employee SET ?", 
                 {
                     first_name: val.firstname,
                     last_name: val.lastname,
                     department_name: val.choice,
-                    role_id: roleId,
                     manager_id: managerId,
                 }, 
                     function(err){
@@ -150,7 +147,7 @@ function startPrompt() {
         }
     var roleChoice = [];
     function chooseRole(){
-        connection.query("SELECT * From department", function(err, res) {
+        connection.query("SELECT name From department", function(err, res) {
             if (err) throw err
             for (var i = 0; i < res.length; i++) {
                 roleChoice.push(res[i].name);
@@ -200,7 +197,7 @@ function startPrompt() {
             },
             
         ]).then(function (val) {
-            connection.query("INSERT INTO role SET ?",
+            connection.query("INSERT INTO role SET ?", 
             {
                 salary: val.salary,
             
@@ -231,13 +228,13 @@ function startPrompt() {
         return employeeChoice;
         
     };
-function addDepartment() {
+function addRole() {
     connection.query("ALTER TABLE employee ADD phoneNumber CHAR(10)", function (err, res) {
         inquirer.prompt([
             {
                 name: "Title",
                 type: "input",
-                message: "What is the Department Title?"
+                message: "What is the Role Title?"
 
             },
             {
@@ -253,11 +250,11 @@ function addDepartment() {
 
             }
         ]).then(function(res){
-            connection.query("INSERT INTO role SET ?",
+            connection.query("INSERT INTO department SET ?",
                 {
-                    department_name: res.Title,
-                    salary: res.Salary,
-                    department_id: res.Department
+                    name: res.Title,
+                    // salary: res.Salary,
+                    // department_id: res.Department
                 },
                 
                 function (err) {
