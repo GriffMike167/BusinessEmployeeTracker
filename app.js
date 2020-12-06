@@ -68,10 +68,12 @@ function startPrompt() {
                     break;
 
                     case "Add a Department?":
+                    addDepartment
                     console.log("Add a Department?")
                     break;
 
-                    case "Ass a Role?":
+                    case "Add a Role?":
+                    addRole();
                     console.log("Ass a Role?")
                     break;
                 }
@@ -170,7 +172,8 @@ function startPrompt() {
     };
     
     function updateEmployee(){
-        inquirer.prompt ([
+        connection.query("ALTER TABLE employee ADD phoneNumber CHAR(10)", function (err, res) {
+            inquirer.prompt ([
             {
                 name: "summary",
                 type: "confirm",
@@ -191,23 +194,30 @@ function startPrompt() {
             {
                 name: "phonenumber",
                 type: "input",
+  
                 message: "Enter their phone number: ",
                 
             },
             
         ]).then(function (val) {
-            connection.query("INSERT INTO role SET ?", 
+            connection.query("INSERT INTO role SET ?"
             {
                 salary: val.salary,
-                // phonenumber: val.phonenumber
+            
+            },
+            ("INSERT INTO employee SET ?", 
+            {
+                phoneNumber: val.phonenumber,
+            
             },
                  function(err){
                     if (err) throw err
                     console.table(val)
                     startPrompt()
-            });
+            }));
         });
-    };
+    });
+};
     
 
     var employeeChoice = [];
@@ -221,4 +231,40 @@ function startPrompt() {
         return employeeChoice;
         
     };
-    
+function addDepartment() {
+    connection.query("ALTER TABLE employee ADD phoneNumber CHAR(10)", function (err, res) {
+        inquirer.prompt([
+            {
+                name: "Title",
+                type: "input",
+                message: "What is the Department Title?"
+
+            },
+            {
+                name: "Department",
+                type: "input",
+                message: "What is the Department Id?"
+
+            },
+            {
+                name: "Salary",
+                type: "input",
+                message: "What is the Salary?"
+
+            }
+        ]).then(function(res){
+            connection.query("INSERT INTO role SET ?",
+                {
+                    department_name: res.Title,
+                    salary: res.Salary,
+                    department_id: res.Department
+                },
+                
+                function (err) {
+                    if (err) throw err
+                    console.table(res);
+                    startPrompt();
+                })
+        })
+        })
+    }
