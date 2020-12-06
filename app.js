@@ -34,7 +34,7 @@ function startPrompt() {
                 "Add an Employee?",
                 "Update an Employee?",
                 "Add a Department?",
-                "Ass a Role?"
+                "Add a Role?"
             ]}
 
             ]).then(function(val) {
