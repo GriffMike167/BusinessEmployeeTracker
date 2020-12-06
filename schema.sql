@@ -29,7 +29,7 @@ CREATE TABLE employee (
 
 
     -- FOREIGN KEY (department_name) REFERENCES department(name),
-    FOREIGN KEY (role_id) REFERENCES role(id),
+    -- FOREIGN KEY (role_id) REFERENCES role(id),
     FOREIGN KEY (manager_id) REFERENCES employee(id)
 
 );
