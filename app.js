@@ -68,7 +68,7 @@ function startPrompt() {
                     break;
 
                     case "Add a Department?":
-                    addDepartment
+                    addDepartment();
                     console.log("Add a Department?")
                     break;
 
