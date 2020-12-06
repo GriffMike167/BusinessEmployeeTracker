@@ -71,7 +71,7 @@ function startPrompt() {
                     console.log("Add a Department?")
                     break;
 
-                    case "Ass a Role?":
+                    case "Add a Role?":
                     addRole();
                     console.log("Ass a Role?")
                     break;
