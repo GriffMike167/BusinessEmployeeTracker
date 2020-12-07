@@ -1,9 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 
-// const { viewAllDepartments } = require("./lib/viewAllDepartments");
 // const { viewAllEmployees } = require("./lib/viewAllEmployees");
-// const { viewAllRoles } = require("./lib/viewAllRoles");
 
 
 const connection = mysql.createConnection({
