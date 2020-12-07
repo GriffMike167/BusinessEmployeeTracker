@@ -32,9 +32,11 @@ function startPrompt() {
                 "View All Employees By Managers?",
                 "View All Employess by Roles?",
                 "Add an Employee?",
-                // "Update an Employee?",
+                "Delete an Employee?",
                 "Add a Department?",
-                "Add a Role?"
+                "Delete a Department?",
+                "Add a Role?",
+                "Delete a Role?"
             ]}
 
             ]).then(function(val) {
@@ -45,7 +47,7 @@ function startPrompt() {
                     viewAllEmployees();
                     break;
 
-                    case "View All Employees By Manager?":
+                    case "View All Employees By Managers?":
                     viewByManager();
                     break;
 
@@ -57,25 +59,30 @@ function startPrompt() {
                     addEmployee();
                     break;
 
-                    // case "Update an Employee?":
-                    // updateEmployee();
-                    // break;
+                    case "Delete an Employee?":
+                    deleteEmployee();
+                    break;
 
                     case "Add a Department?":
                     addDepartment();
                     console.log("Add a Department?")
                     break;
-
+                    case "Delete a Department?":
+                    deleteDepartment();
+                    break;
                     case "Add a Role?":
                     addRole();
                     console.log("Add a Role?")
                     break;
+                    case "Delete a Role?":
+                    deleteRole();
+                    break;
                 }
             })};
         exports.startPrompt = startPrompt;
-
+        
         function viewByManager() {
-            connection.query("SELECT manager_id From employee where manager_id IS NOT NULL", function (err, res) {
+            connection.query("SELECT manager_id, first_name, last_name From employee where manager_id IS NOT NULL order by manager_id", function (err, res) {
                 if (err)
                     throw err;
                 console.table(res);
@@ -307,3 +314,88 @@ function addDepartment() {
             })
         }
         
+        function deleteDepartment() {
+            connection.query("Select * FROM department", function (err, res) {
+                inquirer.prompt([
+                    {
+                        name: "department",
+                        type: "input",
+                        message: "What is the Department Title?",
+                        
+                    },
+                    
+                   
+                ])
+                .then(function(res){
+                    connection.query("DELETE FROM department WHERE ?",
+                        {
+                            name: res.department,
+                        },
+                        
+                        function (err) {
+                            if (err) throw err
+                            console.table(res);
+                            startPrompt();
+                        })
+                })
+            });
+            }
+            function deleteRole() {
+                connection.query("Select * FROM role", function (err, res) {
+                    inquirer.prompt([
+                        {
+                            name: "role",
+                            type: "input",
+                            message: "What is the Role",
+                            
+                        },
+                        
+                       
+                    ])
+                    .then(function(res){
+                        connection.query("DELETE FROM role WHERE ?",
+                            {
+                                title: res.role,
+                            },
+                            
+                            function (err) {
+                                if (err) throw err
+                                console.table(res);
+                                startPrompt();
+                            })
+                    })
+                });
+                }
+                function deleteEmployee() {
+                    connection.query("Select * FROM employee", function (err, res) {
+                        inquirer.prompt([
+                            {
+                                name: "firstname",
+                                type: "input",
+                                message: "What is the employees first name: ",
+                                
+                            },
+                            {
+                                name: "lastname",
+                                type: "input",
+                                message: "What is the employees last name: ",
+                                
+                            },
+                            
+                           
+                        ])
+                        .then(function(res){
+                            connection.query("DELETE FROM employee WHERE ?",
+                                {
+                                    first_name: res.firstname,
+                                    last_name: res.lastname
+                                },
+                                
+                                function (err) {
+                                    if (err) throw err
+                                    console.table(res);
+                                    startPrompt();
+                                })
+                        })
+                    });
+                    }
